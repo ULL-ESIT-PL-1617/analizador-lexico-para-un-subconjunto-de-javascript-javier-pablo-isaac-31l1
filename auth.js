@@ -16,7 +16,8 @@ app.set('port', (process.env.PORT || 8082));
 let instructions = `
 Visit these urls in the browser:
 <ul>
-  <li> <a href="/public/index.html">Acceso al libro</a> </li>
+  <li> <a href="/public/index.html">Acceso al analizador</a> </li>
+  <li> <a href="/private/index.html">Acceso al libro</a> </li>
   <li> <a href="/login?username=javisunami&password=elgransunami">Autenticación</a> </li>
   <li> <a href="/logout"/a> Cerrar sesión</li>
 </ul>
@@ -69,11 +70,12 @@ app.get('/logout', function (req, res) {
 });
 
 // Get content endpoint
-app.get('/public/*?',
+app.get('/private/*?',
     auth  // next only if authenticated
 );
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/private', express.static(path.join(__dirname, 'private')));
 
 app.listen(app.get('port'));
 console.log("app running");
