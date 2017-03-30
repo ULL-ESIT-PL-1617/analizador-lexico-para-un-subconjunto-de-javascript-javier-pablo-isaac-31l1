@@ -27,7 +27,19 @@ Las expresiones regulares que se construyen con este constructor se interpretan 
 ### Caracteres especiales
 Caracter | Signficado | Ejemplo
 -------- | ---------- | -------
-*\* | Una barra invertida que precede a un caracter cambia el significado de ese caracter. Si el siguiente caracter es **especial**, la barra inversa indica que el este caracter no es especial, y si el siguiente caracter **no es especial**, entonces con la barra invertida se convierte en un caracter especial. |`*/\d/* //signifca que se busca un dígito, no la letra d`{.javascript}
+**\** | Una barra invertida que precede a un caracter cambia el significado de ese caracter. Si el siguiente caracter es **especial**, la barra inversa indica que el este caracter no es especial, y si el siguiente caracter **no es especial**, entonces con la barra invertida se convierte en un caracter especial. |``/\d/`` significa que se busca un dígito, no la letra d.
+**-** | El guión entre dos caracteres permite establecer un rango de caracteres, donde el orden está determinado por el número **Unicode**. | ```/0-9/``` indica que se busca un dígito.
+**\d** |  Coincide con cualquier caracter que sea un dígito. | ```/\dc/``` concide con cualquier caracter seguido de una **c**.
+**\w** |	Concide con un caracter alfanumérico incluyendo el guión bajo. | ```/\waa/``` coincide con un caracter alfanumérico seguido de dos **a**.
+**\s** |	Coincide con cualquier caracter en blanco (espacio, tabulación, nueva línea y similares) | ```/\w\sc/``` concide con un caracter alfanumerico seguido de un caracter en blanco y de la letra *c*.
+**\D** |	Coincide con un caracter que no sea un dígito. | ```/\Dplaya/``` concide con un caracter que no sea un número seguido de la palabra **playa**.
+**\W** |	Coincide con un caracter que no sea alfanumerico. | ```/\Wcoche/``` concide con un caracter que no sea un caracter alfanumérico seguido de la palabra **coche**.
+**\S** |	Coincide con un caracter que no sea un caracter en blanco. | ```/pedro\Spicapiedra/``` concide con la palabra **pedro** seguido de un caracter que no sea un caracter en blanco y seguido de la palabra **picapiedra**.
+**.** | Coincide con cualquier caracter excepto un caracter de nueva línea | ```/.99/``` coincide con un caracter que no sea un caracter de nueva línea seguido del número **99**
+**^** | Caracter de **negación**. Coincide con cualquier caracter que no sea el caracter que le sigue.| ```/[^abc]/``` coincide con cualquier caracter que no sea una **a**, una **b** o una **c**.
+**+** | Caracter de **una o más repeticiones**. Se utiliza para indicar que se quieren una o más repeticiones de una secuencia de caracteres| ```/a+/``` coincide con una cadena que tenga una o más **a**
+** * ** | Caracter de **cero o más repeticiones**. Se utiliza para indicar que se quieren cero o más repeticiones de una secuencia de caracteres| ```/a*/``` coincide con una cadena que tenga una o más **a**
+
 
 
 
