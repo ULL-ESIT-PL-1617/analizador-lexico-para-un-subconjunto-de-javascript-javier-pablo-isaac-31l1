@@ -16,9 +16,9 @@ app.set('port', (process.env.PORT || 8082));
 let instructions = `
 Visit these urls in the browser:
 <ul>
-  <li> <a href="http://localhost:`+ app.get('port') +`/public/index.html">Acceso al libro</a> </li>
-  <li> <a href="http://localhost:`+ app.get('port') +`/login?username=javisunami&password=elgransunami">Autenticación</a> </li>
-  <li> <a href="http://localhost:`+ app.get('port') +`/logout"/a> Cerrar sesión</li>
+  <li> <a href="/public/index.html">Acceso al libro</a> </li>
+  <li> <a href="/login?username=javisunami&password=elgransunami">Autenticación</a> </li>
+  <li> <a href="/logout"/a> Cerrar sesión</li>
 </ul>
 `;
 
