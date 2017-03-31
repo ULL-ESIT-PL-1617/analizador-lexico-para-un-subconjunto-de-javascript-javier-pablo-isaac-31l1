@@ -1,27 +1,41 @@
-# Práctica: Estudiar las Cookies y las Sessions en ExpressJS
+# Práctica de Análisis Léxico
 
-## Miembros y sus páginas personales:
+## Procesadores de lenguajes
 
-* [Pablo Pastor Martín](https://alu0100890839.github.io/)
-* [Isaac Manuel Aimán Salas](https://alu0100841565.github.io/)
-* [Javier Ramos Fernández](https://alu0100884982.github.io)
+## Miembros:
 
-## Descripción de la práctica:
+  * [Pablo Pastor Martín](https://0100890839.github.io)
+  * [Isaac Manuel Aimán Salas](https://alu0100841565.github.io/)
+  * [Javier Ramos Fernández](https://alu0100884982.github.io/)
 
-[Enlace a la descripción](https://casianorodriguezleon.gitbooks.io/ull-esit-1617/content/practicas/practicalearningcookies.html)
+## Enlances
 
-## Campus virtual de la asignatura:
+* [Campus virtual de la asignatura](https://campusvirtual.ull.es/1617/course/view.php?id=1148)
+* [Descripción de la práctica](https://casianorodriguezleon.gitbooks.io/ull-esit-1617/content/practicas/practicaanalisislexicotdop.html#recursos)
 
-[Página en el campus virtual](https://campusvirtual.ull.es/1617/course/view.php?id=1148)
+## Despliegues
 
-## Despliegues varios:
+* [Despliegue en Heroku](https://sleepy-atoll-21677.herokuapp.com/)
+* [IAAS de Pablo](http://10.6.128.120:8082)
+* [IAAS de Isaac](http://10.6.128.92:8082)
+* [IAAS de Javier](http://10.6.128.95:8082)
 
-**Importante:** El puerto por defecto es siempre 3000.
+___
 
-* [Heroku](https://intense-gorge-14629.herokuapp.com)
-* [Gh-pages](https://ull-esit-pl-1617.github.io/estudiar-cookies-y-sessions-en-expressjs-javier-pablo-isaac-31l1/)
-* [Gitbook](https://alu0100890839.gitbooks.io/cookies/content/)
-* IAAS:
-  * [Pablo Pastor Martín](http://10.6.128.120:8081)
-  * [Isaac Aimán Salas](http://10.6.128.92:8081)
-  * [Javier Ramos Fernández](http://10.6.129.252:8081)
+TDOP, Top Down Operator Precedence
+
+Douglas Crockford
+douglas@crockford.com
+
+2010-11-12
+
+tdop.html contains a description of Vaughn Pratt's Top Down Operator Precedence,
+and describes a parser for Simplified JavaScript in Simplified JavaScript.
+
+index.html parses parse.js and displays its AST. The page depends on json2.js
+(which is not included in this project) and on parse.js and tokens.js (which
+are).
+
+tdop.js contains a Simplified JavaScript parser. See tdop.html for commentary.
+
+tokens.js produces an array of token objects from a string.
