@@ -42,6 +42,9 @@ Caracter | Signficado | Ejemplo
 **$** | Caracter que coincide con el final de la entrada | ```/este cuento se acabo$/``` coincide con una cadena que termine con la frase **este cuento se acabo**
 **+** | Caracter de **una o más repeticiones**. Se utiliza para indicar que se quieren una o más repeticiones de una secuencia de caracteres| ```/a+/``` coincide con una cadena que tenga una o más **a**
 ** * ** | Caracter de **cero o más repeticiones**. Se utiliza para indicar que se quieren cero o más repeticiones de una secuencia de caracteres| ```/a*/``` coincide con una cadena que tenga una o más **a**
+**\b** | Caracter de frontera. Una frontera de palabra coincide con la posición donde un caracter alfanumérico no es seguido o precedido por otro caracter alfanumérico| ```/oo\b/``` no coincide 'oo' en "moon" porque 'oo' es seguido por 'n', que es un caracter alfanumérico;
+** &#124; ** | Caracter OR. Permite elegir una opción entre varios patrones | ```/\b\d+ (Real Madrid ``` &#124; ```Barcelona``` &#124; ```Atletico de Madrid)s?\b/```
+
 
 ### Grupos
 Los grupos, en las expresiones regulares, se denotan con paréntesis(**()**) y tienen diferentes utilidades.
@@ -74,10 +77,38 @@ console.log(/hola(aaa)?/.exec("holaaaaaaa"));
 
 * Los grupos también son útiles para **extraer partes de una cadena**.
 
+```javascript
 console.log(/hola(aaa)?/.exec("holaaaaaaa"));
-### Opciones de las expresiones regulares
+```
 
-###
+Para poder hacer referencia a los grupos que coinciden en la cadena, se puede usar la notación **$(posicion_grupo)** y **posicion_grupo** es un número entero del 1 al 9 que indica la posición del grupo en la cadena. Se puede hacer referencia a toda la coincidencia con **$&** Por ejemplo:
+```javascript
+console.log(
+  "Hopper, Grace\nMcCarthy, John\nRitchie, Dennis"
+    .replace(/([\w ]+), ([\w ]+)/g, "$2 $1"));
+// → Grace Hopper
+//   John McCarthy
+//   Dennis Ritchie
+```
+En este caso, los simbolos **$1** y **$2** hacen referencia al primer grupo y al segundo, respectivamente. De esta forma, en el método _replace_, se intercambian los contenidos de los dos grupos mutuamente.
+
+### Opciones de las expresiones regulares
+Opcion | Significado
+-------|------------
+**g**  | Se utiliza para realizar una **búsqueda global**, es decir, encuentra todas las coincidencias en lugar de parar en la primera coincidencia.
+**i**  | Usa la coincidencia, sin distinción entre mayúsculas y minúsculas.
+**s**  | Se utiliza para usar el modo de una sóla línea, donde el punto (.) coincide con todos los caracteres (en lugar de todos los caracteres excepto **\n**)
+
+### Voracidad de las expresiones regulares
+En las expresiones regulares, los caracteres ** * ** , **+**, **?** y **{}** buscarán una coincidencia tanto como puedan. De esta forma, si esto causa que la siguiente parte del patrón falle, el buscador de coincidencias se mueve una posición hacia detrás desde el final y lo intenta otra vez desde ahí. Este proceso se repite hasta que encuentra o no la coincidencia y, por tanto, se dice que los caracteres anteriores son _voraces_.
+
+Para evitar este comportamiento en ciertas situaciones, se le añade a los caracteres de repetición un _signo de interrogación_(**?**) a la derecha, de forma que ya se convierten en caracteres _no voraces_. Un caracter que no es voraz comienza a buscar coincidencias de forma incremental, intentando encontrar más solo cuando lo que queda de la expresión regular no se ajusta a la pequeña coincidencia.
+
+Ejemplo:
+```javascript
+console.log(/<div>.*?<\/div>/.exec("<div>etiqueta</div><div>otrodiv</div>")); //["<div>etiqueta</div>"]
+```
+
 
 ## Métodos de búsqueda de patrones en cadenas
 ### _test_
@@ -96,6 +127,19 @@ Ejemplo:
 ```javascript
 /quick\s(brown).+?(jumps)/ig.exec('The Quick Brown Fox Jumps Over The Lazy Dog');
 ```
+Este método no proporciona una manera conveniente de empezar a buscar desde una determinada posición en la cadena a testear. No obstante, se proporciona una manera _inconveniente_ de hacerlo, que es la propiedad *lastIndex*, que controla dónde va a empezar la próxima coincidencia. Para que esto funcione correctamente, es necesario que la expresión regular tenga la opción **g** activada y que la coincidencia ocurra con el método **exec**.
+
+Ejemplo:
+```javascript
+var pattern = /y/g;
+pattern.lastIndex = 3;
+var match = pattern.exec("xyzzy");
+console.log(match.index);
+// → 4
+console.log(pattern.lastIndex);
+// → 5
+```
+Si hubo una coincidencia, la llamada al método _exec_ automáticamente actualiza la propiedad **lastIndex** para que apunte después de la coincidencia. Si no hubo ninguna coincidencia, esta propiedad se pone a 0, que es el mismo valor que tiene una nueva expresión regular.
 
 ### _match_
 Este método, a diferencia de los anteriores, es un método de la clase **String**, no de la clase **RegExp**. Realiza una búsqueda de un determinado patrón en una cadena y retorna un array de información o nulo si no hay coincidencia. A este método se le pasa por parámetro una expresión regular.
@@ -107,3 +151,18 @@ var re = /see (chapter \d+(\.\d)*)/i;
 var found = str.match(re);
 ```
 ### _search_
+El método **search** también realiza una búsqueda de un patrón entre una expresión regular y la cadena que llama a este método.
+Existe un método llamado _indexOf_ que poseen los objetos String y que devuelve el índice, dentro del objeto String que realiza la llamada, de la primera ocurrencia del valor especificado. No obstante, este método no se puede llamar con una expresión regular y, de esta manera, el método **search** se utiliza para buscar la ocurrencia de una expresión regular. Como el método _indexOf_, retorna el primer índice donde se encontró la expresión, o **-1** cuando no se encontró.
+
+Ejemplo:
+```javascript
+" hola pepe que tal".search(/pe/) //6
+```
+### _replace_
+Este método retorna una nueva cadena con algunas o todas las coincidencias de un patrón reemplazadas por un reemplazo.
+
+Ejemplo:
+```javascript
+"papa".replace("p", "m")
+```
+El primer argumento puede ser también una expresión regular. En este caso, la primera coincidencia de la expresión regular es reemplazada, pero si se le añade la opción *g* a la expresión regular, entonces todas las coincidencias en la cadena serán reemplazadas, no solo el primero.
